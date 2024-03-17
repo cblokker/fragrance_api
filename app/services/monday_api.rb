@@ -13,20 +13,20 @@ class MondayAPI
   end
 
   def create_item(board_id, item = {})
-    response = client.query do
-      mutation do
-        create_item
-          input: {
-            board_id: board_id,
-            item_name: item,
-            column_values: JSON.stringify(item)
-          }
-        do
-          id
-        end
-      end
-    end
+    # response = client.query do
+    #   mutation do
+    #     create_item
+    #       input: {
+    #         board_id: board_id,
+    #         item_name: item,
+    #         column_values: JSON.stringify(item)
+    #       }
+    #     do
+    #       id
+    #     end
+    #   end
+    # end
 
-    response.data
+    # response.data
   end
 end
