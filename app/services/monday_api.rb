@@ -1,15 +1,18 @@
 require 'graphlient'
 require 'json'
 
-class MondayAPI
+class MondayApi
   attr_reader :client
 
   def initialize
-    @client = Graphlient::Client.new(ENV['MONDAY_BASE_URL']) do |query|
-      query.headers['Content-Type'] = 'application/json'
-      query.headers['Authorization'] = ENV['MONDAY_API_KEY']
-      query.headers['API-Version'] = ENV['MONDAY_API_VERSION']
-    end
+    @client = Graphlient::Client.new(
+      ENV['MONDAY_BASE_URL'],
+      headers: {
+        'Content-Type' => 'application/json',
+        'Authorization' => ENV['MONDAY_API_KEY'],
+        'API-Version' => ENV['MONDAY_API_VERSION']
+      }
+    )
   end
 
   def create_item(board_id, item = {})

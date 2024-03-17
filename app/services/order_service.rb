@@ -16,6 +16,6 @@ class OrderService
   private
 
   def create_order_in_monday
-    MondayAPI.create_item(board_id:, first_name:, last_name:, quantity:, fragrance_names:)
+    MondayApi.create_item(board_id:, first_name:, last_name:, quantity:, fragrance_names:)
   end
 end
