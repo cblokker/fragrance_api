@@ -8,6 +8,6 @@ class Api::V1::OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:first_name, :last_name, :quantity, fragrance_ids: [])
+    params.require(:order).permit(:first_name, :last_name, :quantity, :sales_associate, fragrance_ids: [])
   end
 end
