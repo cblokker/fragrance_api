@@ -1,5 +1,5 @@
 class OrderService
-  attr_reader :first_name, :last_name, :quantity, :scent_profiles
+  attr_reader :board_id, :first_name, :last_name, :quantity, :scent_profiles
 
   def initialize(board_id:, first_name:, last_name:, quantity: 1, fragrance_ids:)
     @board_id = board_id
@@ -7,6 +7,7 @@ class OrderService
     @last_name = last_name
     @quantity = quantity
     @scent_profiles = Fragrance.where(id: fragrance_ids).pluck(:name)
+    @monday_api_client = MondayApi.new
   end
 
   def call
@@ -16,6 +17,6 @@ class OrderService
   private
 
   def create_order_in_monday
-    MondayApi.create_item(board_id, {first_name:, last_name:, quantity:, scent_profiles:})
+    monday_api_client.create_item(board_id, {first_name:, last_name:, quantity:, scent_profiles:})
   end
 end
