@@ -4,6 +4,7 @@ class Api::V1::OrdersController < ApplicationController
   def create
     OrderService.new(
       board_id: order_params[:board_id],
+      creator_id: order_params[:creator_id],
       first_name: order_params[:first_name],
       last_name: order_params[:last_name],
       quantity: order_params[:quantity],
@@ -14,6 +15,8 @@ class Api::V1::OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:board_id, :first_name, :last_name, :quantity, fragrance_ids: [])
+    params
+      .require(:order)
+      .permit(:board_id, :creator_id, :first_name, :last_name, :quantity, fragrance_ids: [])
   end
 end

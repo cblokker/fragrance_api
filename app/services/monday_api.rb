@@ -22,12 +22,13 @@ class MondayApi
   # TODO: potential of weird mapping issues between item keys & board col names.
   # Might be a good idea to create some validation layer here, or at least
   # check to see if board schema maps to expected item type. (OR lock board columns to ensure linkage)
-  def create_items(board_id:, item_name: '', dropdown_values: '', quantity: 1)
+  def create_item(board_id:, creator_id:, item_name: '', dropdown_values: '', quantity: 1)
     client.query(item_query, {
         board_id: board_id,
         item_name: item_name,
         column_values: {
-          dropdown: { labels: dropdown_values }
+          dropdown: { labels: dropdown_values },
+          people: creator_id
         }.to_json
       }
     )
