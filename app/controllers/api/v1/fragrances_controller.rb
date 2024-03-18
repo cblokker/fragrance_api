@@ -1,5 +1,5 @@
 class Api::V1::FragrancesController < ApplicationController
-  # Note: consider using custom monday object to sync fragrances
+  before_action :set_fragrance, only: [:show, :update, :destroy]
 
   # GET /fragrances
   def index
@@ -9,49 +9,41 @@ class Api::V1::FragrancesController < ApplicationController
 
   # GET /fragrance/:id
   def show
-    @fragrance = Fragrance.find(params[:id])
     render json: @fragrance
   end
 
-  # create the dropdown label
+  # POST /fragrances
   def create
     @fragrance = Fragrance.new(fragrance_params)
 
     if @fragrance.save
-      render json: @fragrance
+      render json: @fragrance, status: :created
     else
-      render json: { error: 'error' }, status: 400
+      render json: { error: 'error' }, status: :unprocessable_entity
     end
   end
 
-  # update the dropdown label
+  # PUT /fragrances/:id
   def update
-    @fragrance = Fragrance.find(params[:id])
-
-    if @fragrance
-      @fragrance.update(fragrance_params)
+    if @fragrance.update(fragrance_params)
+      render json: @fragrance, status: :ok
     else
+      render json: { error: 'error' }, status: :unprocessable_entity
     end
   end
 
   # DELETE /fragrances/:id
-  # delete the dropdown label
   def destroy
-    @fragrance = Fragrance.find(params[:id])
-
-    if @fragrance
-      @fragrance.destroy
-      render json: @fragrance
-    else
-      render json: { error: 'error' }, status: 400
-    end
+    @fragrance.destroy
   end
-
-  # webhooks to keep dropdown labels in sync
 
   private
 
+  def set_fragrance
+    @fragrance = Fragrance.find(params[:id])
+  end
+
   def fragrance_params
-    params.require(:user).permit(:name, :description, :category, :image_url)
+    params.require(:fragrance).permit(:name, :description, :category, :image_url)
   end
 end
