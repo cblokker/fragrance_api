@@ -7,7 +7,6 @@ class OrderService
     @last_name = last_name
     @quantity = quantity
     @scent_profiles = Fragrance.where(id: fragrance_ids).pluck(:name)
-    @monday_api_client = MondayApi.new
   end
 
   def call
@@ -17,6 +16,6 @@ class OrderService
   private
 
   def create_order_in_monday
-    monday_api_client.create_item(board_id, {first_name:, last_name:, quantity:, scent_profiles:})
+    MondayApi.new.create_item(board_id, {first_name:, last_name:, quantity:, scent_profiles:})
   end
 end
