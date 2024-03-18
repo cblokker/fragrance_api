@@ -25,7 +25,7 @@ class MondayApi
   def create_item(board_id, item = {})
     query_variables = {
       board_id: board_id,
-      item_name: "Order: #{item[:first_name]} #{item[:last_name]}"
+      item_name: "Order: #{item[:first_name]} #{item[:last_name]}",
       column_values: item.to_json
     }
 
