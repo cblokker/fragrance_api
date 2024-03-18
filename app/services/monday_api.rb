@@ -1,4 +1,4 @@
-require 'graphlient'
+require 'graphlient' # https://github.com/ashkan18/graphlient
 require 'json'
 
 class MondayApi
@@ -19,23 +19,25 @@ class MondayApi
     )
   end
 
-  # TODO: maybe weird mapping issues between item keys & board col names.
+  # TODO: potential of weird mapping issues between item keys & board col names.
   # Might be a good idea to create some validation layer here, or at least
-  # check to see if board schema maps to expected item type.
-  def create_item(board_id, item = {})
-    query_variables = {
-      board_id: board_id,
-      item_name: "Order: #{item[:first_name]} #{item[:last_name]}",
-      column_values: item.to_json
-    }
-
-    client.query(item_query, query_variables)
+  # check to see if board schema maps to expected item type. (OR lock board columns to ensure linkage)
+  def create_items(board_id:, item_name: '', dropdown_values: '', quantity: 1)
+    client.query(item_query, {
+        board_id: board_id,
+        item_name: item_name,
+        column_values: {
+          dropdown: { labels: dropdown_values }
+        }.to_json
+      }
+    )
   end
 
+  # creator_id
   def item_query
     <<-GRAPHQL
-      mutation ($board_id: ID!, $item_name: String!) {
-        create_item (board_id: $board_id, item_name: $item_name) {
+      mutation ($board_id: ID!, $item_name: String!, $column_values: JSON) {
+        create_item (board_id: $board_id, item_name: $item_name, column_values: $column_values, create_labels_if_missing: true) {
           id
         }
       }

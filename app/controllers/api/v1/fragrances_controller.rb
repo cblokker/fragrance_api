@@ -13,7 +13,7 @@ class Api::V1::FragrancesController < ApplicationController
     render json: @fragrance
   end
 
-  # POST /fragrances
+  # create the dropdown label
   def create
     @fragrance = Fragrance.new(fragrance_params)
 
@@ -24,7 +24,7 @@ class Api::V1::FragrancesController < ApplicationController
     end
   end
 
-  # PUT /fragrances/:id
+  # update the dropdown label
   def update
     @fragrance = Fragrance.find(params[:id])
 
@@ -35,6 +35,7 @@ class Api::V1::FragrancesController < ApplicationController
   end
 
   # DELETE /fragrances/:id
+  # delete the dropdown label
   def destroy
     @fragrance = Fragrance.find(params[:id])
 
@@ -45,6 +46,8 @@ class Api::V1::FragrancesController < ApplicationController
       render json: { error: 'error' }, status: 400
     end
   end
+
+  # webhooks to keep dropdown labels in sync
 
   private
 

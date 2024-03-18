@@ -1,6 +1,4 @@
 class OrderService
-  attr_reader :board_id, :first_name, :last_name, :quantity, :scent_profiles
-
   def initialize(board_id:, first_name:, last_name:, quantity: 1, fragrance_ids:)
     @board_id = board_id
     @first_name = first_name
@@ -15,7 +13,13 @@ class OrderService
 
   private
 
+  attr_reader :board_id, :first_name, :last_name, :quantity, :scent_profiles
+
   def create_order_in_monday
-    MondayApi.new.create_item(board_id, {first_name:, last_name:, quantity:, scent_profiles:})
+    MondayApi.new.create_item(
+      board_id: board_id,
+      item_name: "Order: #{first_name} #{last_name} (quantity: #{quantity})",
+      dropdown_values: scent_profiles
+    )
   end
 end
